@@ -1,5 +1,7 @@
-("use strict");
+"use strict";
+// @ts-ignore
 const stripe = require("stripe")(process.env.STRIPE_KEY);
+
 /**
  * order controller
  */
@@ -22,7 +24,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
               product_data: {
                 name: item.title,
               },
-              unit_amount: Math.round(item.price * 100),
+              unit_amount: Math.round(item.Price * 100),
             },
             quantity: product.attributes.quantity,
           };
@@ -34,7 +36,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         payment_method_types: ["card"],
         mode: "payment",
         success_url: process.env.CLIENT_URL + "/success",
-        cancel_url: process.env.CLIENT_URL + "?success=false",
+        cancel_url: process.env.CLIENT_URL + "/CancelPayment",
         line_items: lineItems,
       });
 
